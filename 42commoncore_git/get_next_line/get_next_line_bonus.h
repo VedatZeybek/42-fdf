@@ -5,13 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vzeybek <vzeybek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/15 19:02:27 by vzeybek           #+#    #+#             */
-/*   Updated: 2025/06/15 19:02:28 by vzeybek          ###   ########.fr       */
+/*   Created: 2025/06/16 20:26:49 by vzeybek           #+#    #+#             */
+/*   Updated: 2025/06/16 20:26:50 by vzeybek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif

@@ -6,11 +6,11 @@
 /*   By: vzeybek <vzeybek@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 11:31:57 by vzeybek           #+#    #+#             */
-/*   Updated: 2025/06/15 18:50:53 by vzeybek          ###   ########.fr       */
+/*   Updated: 2025/06/16 13:05:26 by vzeybek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(char *str)
 {
