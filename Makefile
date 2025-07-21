@@ -1,15 +1,14 @@
 NAME = fdf
 
-SRC = main.c other.c ...
+SRC = deneme.c
 OBJ = $(SRC:.c=.o)
 MLX = ./minilibx-linux
 
-CFLAGS = -Wall -Wextra -Werror
-
 all: $(NAME)
 
+
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L$(MLX) -lmlx -lXext -lX11 -lm
+	$(CC) $(OBJ) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 
 clean:
 	rm -f $(OBJ)
