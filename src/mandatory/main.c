@@ -32,6 +32,8 @@ int	main(int argc, char **argv)
 {
 	t_fdf	fdf;
 
+	if (argc != 2)
+		return (EXIT_FAILURE);
 	fill_stats(&fdf, argv[1]);
 	apply_isometric_projection(&fdf);
 	draw_map(&fdf);

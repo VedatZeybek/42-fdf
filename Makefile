@@ -8,7 +8,7 @@ BONUS_FILES =	main_bonus.c key_handler_bonus.c parallel_bonus.c color_bonus.c \
 				isometric_bonus.c create_points_bonus.c \
 				error_bonus.c draw_line_bonus.c draw_map_bonus.c
 
-UTILS = 		get_next_line.c get_next_line_utils.c ft_atoi.c ft_split.c
+UTILS = 		get_next_line.c get_next_line_utils.c ft_atoi.c ft_split.c ft_atoi_base.c
 
 
 FILES_PATH = 	./src/mandatory/

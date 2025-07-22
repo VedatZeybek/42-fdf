@@ -34,6 +34,7 @@ typedef struct s_fdf
 	int		offset_y;
 	int		scale;
 	int		rotation_angle;
+	char	projection_type;
 }	t_fdf;
 
 typedef struct s_rgb
@@ -43,7 +44,21 @@ typedef struct s_rgb
 	int	b;
 }	t_rgb;
 
+typedef struct s_line
+{
+	int	dx;
+	int	dy;
+	int	x_step;
+	int	y_step;
+	int	x;
+	int	y;
+	int	error;
+	int	steps;
+	int	color;
+}	t_line;
+
 int		ft_atoi(const char *str);
+int		ft_atoi_base(char *str, int base);
 char	**ft_split(const char *s, char c);
 
 int		count_column(char **map);
@@ -51,9 +66,10 @@ int		count_rows(char *filename);
 char	**read_map(char *filename, int rows);
 t_point	**create_points(char **map, int col, int row);
 
+
 void	apply_isometric_projection(t_fdf *fdf);
-void	apply_parallel_projection(t_fdf *fdf, int screen_width,
-			int screen_height);
+void	apply_parallel_projection(t_fdf *fdf);
+
 int		get_gradient_color(int color_start, int color_end, float t);
 int		get_color(int z);
 void	draw_line(t_point p0, t_point p1, void *mlx, void *mlx_window);

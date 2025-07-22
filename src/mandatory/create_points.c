@@ -22,8 +22,8 @@ int	count_rows(char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
-		perror("File Error.");
-		return (-1);
+		perror("File Error");
+		exit(EXIT_FAILURE);
 	}
 	count = 0;
 	line = get_next_line(fd);
@@ -65,17 +65,23 @@ static void	create_row_points(t_point *row_points, char *map_line,
 {
 	char	**split;
 	int		j;
+	char	**parts;
 
 	split = ft_split(map_line, ' ');
 	j = 0;
 	while (j < col)
 	{
+		parts = ft_split(split[j], ',');
 		row_points[j].x = j;
 		row_points[j].y = row_idx;
-		row_points[j].z = ft_atoi(split[j]);
+		row_points[j].z = ft_atoi(parts[0]);
+		if (parts[1])
+			row_points[j].color = ft_atoi_base(parts[1], 16);
+		else
+			row_points[j].color = get_color(row_points[j].z);
 		row_points[j].screen_x = 0;
 		row_points[j].screen_y = 0;
-		row_points[j].color = get_color(row_points[j].z);
+		free_split(parts);
 		j++;
 	}
 	free_split(split);

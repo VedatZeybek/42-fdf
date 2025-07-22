@@ -26,12 +26,15 @@ static void	fill_stats(t_fdf *fdf, char *argv)
 	fdf->offset_x = window_width / 2;
 	fdf->offset_y = window_height / 3;
 	fdf->scale = 20;
+	fdf->projection_type = '1';
 }
 
 int	main(int argc, char **argv)
 {
 	t_fdf	fdf;
 
+	if (argc != 2)
+		return (EXIT_FAILURE);
 	fill_stats(&fdf, argv[1]);
 	apply_isometric_projection(&fdf);
 	draw_map(&fdf);
@@ -39,5 +42,4 @@ int	main(int argc, char **argv)
 	mlx_hook(fdf.win, 17, 0, handle_close, &fdf);
 	mlx_expose_hook(fdf.win, handle_expose, &fdf);
 	mlx_loop(fdf.mlx);
-	free_points(fdf.points);
 }

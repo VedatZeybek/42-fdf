@@ -1,77 +1,74 @@
 #include "../../inc/fdf.h"
 
-static void	init_line_data(t_point p0, t_point p1, int *params)
+static void	init_line_data(t_point p0, t_point p1, t_line *line)
 {
-	params[0] = abs(p1.screen_x - p0.screen_x);
-	params[1] = abs(p1.screen_y - p0.screen_y);
+	line->dx = abs(p1.screen_x - p0.screen_x);
+	line->dy = abs(p1.screen_y - p0.screen_y);
 	if (p0.screen_x < p1.screen_x)
-		params[2] = 1;
+		line->x_step = 1;
 	else
-		params[2] = -1;
+		line->x_step = -1;
 	if (p0.screen_y < p1.screen_y)
-		params[3] = 1;
+		line->y_step = 1;
 	else
-		params[3] = -1;
-	params[4] = p0.screen_x;
-	params[5] = p0.screen_y;
-	params[6] = params[0] - params[1];
-	if (params[0] > params[1])
-		params[7] = params[0];
+		line->y_step = -1;
+	line->x = p0.screen_x;
+	line->y = p0.screen_y;
+	line->error = line->dx - line->dy;
+	if (line->dx > line->dy)
+		line->steps = line->dx;
 	else
-		params[7] = params[1];
-	params[8] = 0;
+		line->steps = line->dy;
+	line->color = 0;
 }
 
-static void	calculate_next_pixel(int *params)
+static void	calculate_next_pixel(t_line *line)
 {
 	int	error2;
 
-	error2 = 2 * params[6];
-	if (error2 > -params[1])
+	error2 = 2 * line->error;
+	if (error2 > -(line->dy))
 	{
-		params[6] -= params[1];
-		params[4] += params[2];
+		line->error -= line->dy;
+		line->x += line->x_step;
 	}
-	if (error2 < params[0])
+	if (error2 < line->dx)
 	{
-		params[6] += params[0];
-		params[5] += params[3];
+		line->error += line->dx;
+		line->y += line->y_step;
 	}
 }
 
-static void	draw_gradient_pixel(int *params, t_point p0, t_point p1, int step)
+static void	draw_gradient_pixel(t_line *line, t_point p0, t_point p1, int step)
 {
 	float	t;
-	int		color;
 
-	if (params[7] == 0)
+	if (line->steps == 0)
 		t = 0.0;
 	else
-		t = (float)step / params[7];
-	color = get_gradient_color(p0.color, p1.color, t);
-	params[8] = color;
+		t = (float)step / line->steps;
+	line->color = get_gradient_color(p0.color, p1.color, t);
 }
 
-static int	put_pixel_and_check(int *params, t_point p1,
-			void *mlx, void *mlx_window)
+static int	put_pixel_and_check(t_line *line, t_point p1, void *mlx, void *win)
 {
-	mlx_pixel_put(mlx, mlx_window, params[4], params[5], params[8]);
-	return (params[4] == p1.screen_x && params[5] == p1.screen_y);
+	mlx_pixel_put(mlx, win, line->x, line->y, line->color);
+	return (line->x == p1.screen_x && line->y == p1.screen_y);
 }
 
 void	draw_line(t_point p0, t_point p1, void *mlx, void *mlx_window)
 {
-	int	params[9];
-	int	i;
+	t_line	line;
+	int		i;
 
-	init_line_data(p0, p1, params);
+	init_line_data(p0, p1, &line);
 	i = 0;
-	while (i <= params[7])
+	while (i <= line.steps)
 	{
-		draw_gradient_pixel(params, p0, p1, i);
-		if (put_pixel_and_check(params, p1, mlx, mlx_window))
+		draw_gradient_pixel(&line, p0, p1, i);
+		if (put_pixel_and_check(&line, p1, mlx, mlx_window))
 			break ;
-		calculate_next_pixel(params);
+		calculate_next_pixel(&line);
 		i++;
 	}
 }

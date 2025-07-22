@@ -1,5 +1,21 @@
 #include "../../inc/fdf.h"
 
+
+static void	display_projection_menu(t_fdf *fdf)
+{
+	char	*text;
+
+	if (fdf->projection_type == '1')
+		text = "Projection: Isometric (press 1 or 2)";
+	else if (fdf->projection_type == '2')
+		text = "Projection: Parallel  (press 1 or 2)";
+	else
+		text = "Projection: Unknown";
+
+	mlx_string_put(fdf->mlx, fdf->win, 20, 30, 0xFFFFFF, text);
+}
+
+
 void	draw_map(t_fdf *fdf)
 {
 	int	y;
@@ -21,4 +37,5 @@ void	draw_map(t_fdf *fdf)
 		}
 		y++;
 	}
+	display_projection_menu(fdf);
 }
