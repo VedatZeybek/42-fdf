@@ -1,4 +1,4 @@
-#include "../../inc/fdf.h"
+#include "../../inc/fdf_bonus.h"
 
 int	get_color(int z)
 {

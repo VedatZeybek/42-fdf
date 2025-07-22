@@ -1,5 +1,4 @@
-#include "../../inc/fdf.h"
-
+#include "../../inc/fdf_bonus.h"
 
 static void	display_projection_menu(t_fdf *fdf)
 {
@@ -11,10 +10,8 @@ static void	display_projection_menu(t_fdf *fdf)
 		text = "Projection: Parallel  (press 1 or 2)";
 	else
 		text = "Projection: Unknown";
-
 	mlx_string_put(fdf->mlx, fdf->win, 20, 30, 0xFFFFFF, text);
 }
-
 
 void	draw_map(t_fdf *fdf)
 {

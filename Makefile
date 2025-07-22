@@ -5,7 +5,7 @@ FILES =			main.c color.c isometric.c create_points.c \
 				error.c draw_line.c draw_map.c
 
 BONUS_FILES =	main_bonus.c key_handler_bonus.c parallel_bonus.c color_bonus.c \
-				isometric_bonus.c create_points_bonus.c \
+				isometric_bonus.c create_points_bonus.c rotate_bonus.c\
 				error_bonus.c draw_line_bonus.c draw_map_bonus.c
 
 UTILS = 		get_next_line.c get_next_line_utils.c ft_atoi.c ft_split.c ft_atoi_base.c
@@ -41,11 +41,11 @@ $(BONUS_NAME): $(BONUS_OBJ)
 
 clean:
 	@echo "Cleaning object files..."
-	@rm -f $(OBJ) $(BONUS_OBJ)
+	@rm -rf $(OBJ) $(BONUS_OBJ)
 
 fclean: clean
 	@echo "Removing executables..."
-	@rm -f $(NAME) $(BONUS_NAME)
+	@rm -rf $(NAME) $(BONUS_NAME)
 
 re: fclean all
 

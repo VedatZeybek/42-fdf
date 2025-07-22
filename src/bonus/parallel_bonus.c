@@ -1,4 +1,4 @@
-#include "../../inc/fdf.h"
+#include "../../inc/fdf_bonus.h"
 
 static void	parallel_projection(t_point *point, t_fdf *fdf)
 {

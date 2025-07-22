@@ -1,4 +1,4 @@
-#include "../../inc/fdf.h"
+#include "../../inc/fdf_bonus.h"
 
 static void	init_line_data(t_point p0, t_point p1, t_line *line)
 {
