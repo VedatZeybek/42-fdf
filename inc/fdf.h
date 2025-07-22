@@ -7,8 +7,8 @@
 #include "fcntl.h"
 #include "stdlib.h"
 #include "stdio.h"
-#include ".././lib/gnl/get_next_line.h"
-#include ".././lib/minilibx-linux/mlx.h"
+#include "../lib/helper/get_next_line.h"
+#include "../lib/minilibx-linux/mlx.h"
 #include "unistd.h"
 #include "math.h"
 

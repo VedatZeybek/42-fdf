@@ -1,4 +1,4 @@
-#include ".././inc/fdf.h"
+#include "../../inc/fdf.h"
 
 static void	fill_stats(t_fdf *fdf, char *argv)
 {	
@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 	fill_stats(&fdf, argv[1]);
 	apply_isometric_projection(&fdf);
 	draw_map(&fdf);
-	mlx_key_hook(fdf.win, handle_key, &fdf);
+	//mlx_key_hook(fdf.win, handle_key, &fdf);
 	mlx_hook(fdf.win, 17, 0, handle_close, &fdf);
 	mlx_expose_hook(fdf.win, handle_expose, &fdf);
 	mlx_loop(fdf.mlx);

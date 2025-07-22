@@ -1,15 +1,24 @@
-NAME = fdf
+NAME = 			fdf
 
-FILES =		main.c ft_atoi.c ft_split.c color.c projections.c create_points.c \
-			error.c draw.c key_handler.c
+FILES =			main.c color.c isometric_projection.c create_points.c \
+				error.c draw.c
 
-UTILS =  ./lib/gnl/get_next_line.c ./lib/gnl/get_next_line_utils.c 
+BONUS_FILES =	key_handler.c parallel_projection.c
 
-SRC_PATH = ./src/mandatory/
+UTILS = 		get_next_line.c get_next_line_utils.c ft_atoi.c ft_split.c
 
-OBJ = $(SRC:.c=.o)
+
+FILES_PATH = 	./src/mandatory/
+UTILS_PATH =	./lib/helper/
+BONUS_FILES_PATH = 	./src/bonus/
+
+SRC = 			$(addprefix $(FILES_PATH), $(FILES)) $(addprefix $(UTILS_PATH), $(UTILS))
+BONUS_SRC =		$(addprefix $(BONUS_FILES_PATH), $(BONUS_FILES)) $(addprefix $(UTILS_PATH), $(UTILS))
+
+OBJ =			$(SRC:.c=.o)
+BONUS_OBJ =		$(BONUS_SRC:.c=.o)
+
 MLX = ./minilibx-linux
-
 
 all: $(NAME)
 

@@ -1,4 +1,4 @@
-#include ".././inc/fdf.h"
+#include "../../inc/fdf.h"
 
 static void draw_line(t_point p0, t_point p1, void *mlx, void *mlx_window)
 {

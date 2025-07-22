@@ -1,4 +1,4 @@
-#include ".././inc/fdf.h"
+#include "../../inc/fdf.h"
 
 void apply_isometric_projection(t_fdf *fdf)
 {
