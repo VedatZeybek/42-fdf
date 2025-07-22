@@ -31,10 +31,9 @@ void	apply_parallel_projection(t_point **points, int row, int col, int screen_wi
 	}
 }
 
-void apply_isometric_projection(t_point **points, int row, int col, int offset_x, int offset_y)
+void apply_isometric_projection(t_point **points, int row, int col, int offset_x, int offset_y, int scale)
 {
 	int		i, j;
-	int		scale = 20;
 	float	z_scale = 2.0;
 
 	float	angle = 30.0 * (3.147 / 180);  // Dereceyi radyana çevir: 30° = π/6

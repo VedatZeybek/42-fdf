@@ -43,7 +43,7 @@ int		count_rows(char *filename);
 char	**read_map(char *filename, int rows);
 t_point	**create_points(char **map, int col, int row);
 
-void	apply_isometric_projection(t_point **points, int row, int col, int offset_x, int offset_y);
+void apply_isometric_projection(t_point **points, int row, int col, int offset_x, int offset_y, int scale);
 void	apply_parallel_projection(t_point **points, int row, int col, int screen_width, int screen_height);
 int 	get_gradient_color(int color_start, int color_end, float t);
 int		get_color(int z);
