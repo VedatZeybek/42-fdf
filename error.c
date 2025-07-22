@@ -14,3 +14,11 @@ void	free_split(char **split)
 	}
 	free(split);
 }
+
+
+int	handle_close(t_vars *vars)
+{
+	// Gerekli temizlik işlemleri yapılabilir
+	exit(0);
+	return (0);
+}

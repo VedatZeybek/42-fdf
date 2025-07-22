@@ -1,19 +1,28 @@
 #include "fdf.h"
 
-int	handle_key(int keycode, t_vars *vars)
+int handle_key(int keycode, t_vars *vars)
 {
-	if (keycode == 65307)
-		exit(0);
-	else if (keycode == 61 || keycode == 65451)
-		vars->scale += 2;
-	else if ((keycode == 45 || keycode == 65453) && vars->scale > 2)
-		vars->scale -= 2;
+    if (keycode == 65307)
+        exit(0);
+    else if (keycode == 'w' || keycode == 119)
+        vars->scale += 2;
+    else if ((keycode == 's' || keycode == 115) && vars->scale > 2)
+        vars->scale -= 2;
+    else if (keycode == 65363) // Sol
+        vars->offset_x -= 20;
+    else if (keycode == 65361) // Sağ
+        vars->offset_x += 20;
+    else if (keycode == 65364) // Yukarı
+        vars->offset_y -= 20;
+    else if (keycode == 65362) // Aşağı
+        vars->offset_y += 20;
 
-	mlx_clear_window(vars->mlx, vars->win);
-	apply_isometric_projection(vars->points, vars->row, vars->col, vars->offset_x, vars->offset_y, vars->scale);
-	draw_map(vars->mlx, vars->win, vars->points, vars->row, vars->col);
-	return (0);
+    mlx_clear_window(vars->mlx, vars->win);
+    apply_isometric_projection(vars->points, vars->row, vars->col, vars->offset_x, vars->offset_y, vars->scale);
+    draw_map(vars->mlx, vars->win, vars->points, vars->row, vars->col);
+    return (0);
 }
+
 
 int main(int argc, char **argv)
 {
@@ -46,18 +55,19 @@ int main(int argc, char **argv)
 
 	fdf.win = mlx_new_window(fdf.mlx, window_width, window_height, "FDF");
 
-	int offset_x = window_width / 2;
-    int offset_y = window_height / 3;
+	fdf.offset_x = window_width / 2;
+    fdf.offset_y = window_height / 3;
 	fdf.scale = 20;
 	
-	apply_isometric_projection(fdf.points, fdf.row, fdf.col, offset_x, offset_y, fdf.scale);
+	apply_isometric_projection(fdf.points, fdf.row, fdf.col, fdf.offset_x, fdf.offset_y, fdf.scale);
 	
 	//apply_parallel_projection(fdf.points, fdf.row, fdf.col, window_width, window_height);
 
-	printf("selam\n");
 	draw_map(fdf.mlx, fdf.win, fdf.points, fdf.row, fdf.col);
 
 	mlx_key_hook(fdf.win, handle_key, &fdf);
+	mlx_hook(fdf.win, 17, 0, handle_close, &fdf);
+
 
 	mlx_loop(fdf.mlx);
 }
