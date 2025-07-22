@@ -35,16 +35,16 @@ static void draw_line(t_point p0, t_point p1, void *mlx, void *mlx_window)
 	}
 }
 
-void draw_map(void *mlx, void *win, t_point **points, int rows, int cols)
+void draw_map(t_fdf *fdf)
 {
-	for (int y = 0; y < rows; y++)
+	for (int y = 0; y < fdf->row; y++)
 	{
-		for (int x = 0; x < cols; x++)
+		for (int x = 0; x < fdf->col; x++)
 		{
-			if (x < cols - 1)
-			draw_line(points[y][x], points[y][x + 1], mlx, win);
-			if (y < rows - 1)
-			draw_line(points[y][x], points[y + 1][x], mlx, win);
+			if (x < fdf->col - 1)
+			draw_line(fdf->points[y][x], fdf->points[y][x + 1], fdf->mlx, fdf->win);
+			if (y < fdf->row - 1)
+			draw_line(fdf->points[y][x], fdf->points[y + 1][x], fdf->mlx, fdf->win);
 		}
 	}
 }

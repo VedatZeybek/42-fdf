@@ -16,7 +16,7 @@ void	free_split(char **split)
 }
 
 
-int	handle_close(t_vars *vars)
+int	handle_close(t_fdf *vars)
 {
 	exit(0);
 	return (0);

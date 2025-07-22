@@ -31,7 +31,7 @@ void	apply_parallel_projection(t_point **points, int row, int col, int screen_wi
 	}
 }
 
-void apply_isometric_projection(t_point **points, int row, int col, int offset_x, int offset_y, int scale)
+void apply_isometric_projection(t_fdf *fdf)
 {
 	int		i, j;
 	float	z_scale = 2.0;
@@ -41,16 +41,16 @@ void apply_isometric_projection(t_point **points, int row, int col, int offset_x
 	float	cos_angle = cos(angle);  // ≈ 0.866
 	float	sin_angle = sin(angle);  // ≈ 0.5
 
-	for (i = 0; i < row; i++)
+	for (i = 0; i < fdf->row; i++)
 	{
-		for (j = 0; j < col; j++)
+		for (j = 0; j < fdf->col; j++)
 		{
-			float x = points[i][j].x * scale;
-			float y = points[i][j].y * scale;
-			float z = points[i][j].z * z_scale;
+			float x = fdf->points[i][j].x * fdf->scale;
+			float y = fdf->points[i][j].y * fdf->scale;
+			float z = fdf->points[i][j].z * z_scale;
 
-			points[i][j].screen_x = (x - y) * cos_angle + offset_x;
-			points[i][j].screen_y = (x + y) * sin_angle - z + offset_y;
+			fdf->points[i][j].screen_x = (x - y) * cos_angle + fdf->offset_x;
+			fdf->points[i][j].screen_y = (x + y) * sin_angle - z + fdf->offset_y;
 		}
 	}
 }

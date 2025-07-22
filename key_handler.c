@@ -1,65 +1,63 @@
 #include "fdf.h"
 
-
-
-void rotate_screen_coordinates(t_point **points, int rows, int cols, float angle_deg, int pivot_x, int pivot_y)
+void rotate_screen_coordinates(t_fdf *fdf)
 {
-	float rad = angle_deg * 3.14 / 180.0f;
+	float rad = fdf->rotation_angle * 3.14 / 180.0f;
     float cos_a = cosf(rad);
     float sin_a = sinf(rad);
 	
-    for (int i = 0; i < rows; i++)
+    for (int i = 0; i < fdf->row; i++)
     {
-		for (int j = 0; j < cols; j++)
+		for (int j = 0; j < fdf->col; j++)
         {
-			int x = points[i][j].screen_x - pivot_x;
-            int y = points[i][j].screen_y - pivot_y;
+			int x = fdf->points[i][j].screen_x - fdf->offset_x;
+            int y = fdf->points[i][j].screen_y - fdf->offset_y;
 			
             int rotated_x = (int)(x * cos_a - y * sin_a);
             int rotated_y = (int)(x * sin_a + y * cos_a);
 			
-            points[i][j].screen_x = rotated_x + pivot_x;
-            points[i][j].screen_y = rotated_y + pivot_y;
+            fdf->points[i][j].screen_x = rotated_x + fdf->offset_x;
+            fdf->points[i][j].screen_y = rotated_y + fdf->offset_y;
         }
     }
 }
 
 
-int handle_key(int keycode, t_vars *vars)
+int handle_key(int keycode, t_fdf *fdf)
 {
 	static float angle = 0;
 	
     if (keycode == 65307)
 	exit(0);
     else if (keycode == 'w' || keycode == 119)
-	vars->scale += 2;
-    else if ((keycode == 's' || keycode == 115) && vars->scale > 2)
-	vars->scale -= 2;
+	fdf->scale += 1;
+    else if ((keycode == 's' || keycode == 115) && (fdf->scale > 7))
+	fdf->scale -= 1;
     else if (keycode == 65363) // Sol
-	vars->offset_x -= 20;
+	fdf->offset_x -= 20;
     else if (keycode == 65361) // Sağ
-	vars->offset_x += 20;
+	fdf->offset_x += 20;
     else if (keycode == 65364) // Yukarı
-	vars->offset_y -= 20;
+	fdf->offset_y -= 20;
     else if (keycode == 65362) // Aşağı
-	vars->offset_y += 20;
+	fdf->offset_y += 20;
     else if (keycode == 'a' || keycode == 97) // A tuşu - saat yönü
-	vars->rotation_angle -= 5;
+	fdf->rotation_angle -= 5;
     else if (keycode == 'd' || keycode == 100) // D tuşu - saatin tersi
-        vars->rotation_angle += 5;
+        fdf->rotation_angle += 5;
 		
-	mlx_clear_window(vars->mlx, vars->win);
-    apply_isometric_projection(vars->points, vars->row, vars->col, vars->offset_x, vars->offset_y, vars->scale);
-	rotate_screen_coordinates(vars->points, vars->row, vars->col, vars->rotation_angle, vars->offset_x, vars->offset_y);
-    draw_map(vars->mlx, vars->win, vars->points, vars->row, vars->col);
+	mlx_clear_window(fdf->mlx, fdf->win);
+    apply_isometric_projection(fdf);
+	rotate_screen_coordinates(fdf);
+    draw_map(fdf);
     return (0);
 }
 
-int handle_expose(t_vars *vars)
+int handle_expose(t_fdf *fdf)
 {
-	mlx_clear_window(vars->mlx, vars->win);
-	apply_isometric_projection(vars->points, vars->row, vars->col, vars->offset_x, vars->offset_y, vars->scale);
-	rotate_screen_coordinates(vars->points, vars->row, vars->col, vars->rotation_angle, vars->offset_x, vars->offset_y);
-	draw_map(vars->mlx, vars->win, vars->points, vars->row, vars->col);
+	mlx_clear_window(fdf->mlx, fdf->win);
+    apply_isometric_projection(fdf);
+	rotate_screen_coordinates(fdf);
+    draw_map(fdf);
 	return (0);
 }

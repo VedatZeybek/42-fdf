@@ -1,16 +1,22 @@
 #include "fdf.h"
 
+void	fill_stats(t_fdf *fdf, char *argv)
+{	
+	fdf->mlx = mlx_init();
+	fdf->row = count_rows(argv);
+	fdf->map = read_map(argv, fdf->row);
+	fdf->col = count_column(fdf->map);
+	fdf->points = create_points(fdf->map, fdf->col, fdf->row);
+}
+
+
 int main(int argc, char **argv)
 {
 
-	t_vars fdf;
+	t_fdf fdf;
 	
-	fdf.mlx = mlx_init();
-	fdf.row = count_rows(argv[1]);
-	fdf.map = read_map(argv[1], fdf.row);
-	fdf.col = count_column(fdf.map);
-	
-	fdf.points = create_points(fdf.map, fdf.col, fdf.row);
+
+	fill_stats(&fdf, argv[1]);
 	
 	int window_width = fdf.col * PIXEL_SIZE + MARGIN * 2;
     int window_height = fdf.row * PIXEL_SIZE + MARGIN * 2;
@@ -23,7 +29,7 @@ int main(int argc, char **argv)
 		window_width = 1600;
 		window_height = 1200;
 	}
-	else if ((fdf.col * 20 < 800) && (fdf.row * 20 > 600))
+	else if ((fdf.col * 20 < 800) && (fdf.row * 20 < 600))
 	{
 		window_width = 800;
 		window_height = 600;
@@ -35,11 +41,9 @@ int main(int argc, char **argv)
     fdf.offset_y = window_height / 3;
 	fdf.scale = 20;
 	
-	apply_isometric_projection(fdf.points, fdf.row, fdf.col, fdf.offset_x, fdf.offset_y, fdf.scale);
-	
-	//apply_parallel_projection(fdf.points, fdf.row, fdf.col, window_width, window_height);
+	apply_isometric_projection(&fdf);
 
-	draw_map(fdf.mlx, fdf.win, fdf.points, fdf.row, fdf.col);
+	draw_map(&fdf);
 
 	mlx_key_hook(fdf.win, handle_key, &fdf);
 	mlx_hook(fdf.win, 17, 0, handle_close, &fdf);
