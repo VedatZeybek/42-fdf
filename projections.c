@@ -2,7 +2,8 @@
 
 static void	parallel_projection(t_point *point, int screen_width, int screen_height)
 {
-	double	x_proj, y_proj;
+	double	x_proj;
+	double	y_proj;
 	double	scale;
 	
 	x_proj = (double)point->x;
@@ -35,22 +36,23 @@ void apply_isometric_projection(t_fdf *fdf)
 {
 	int		i;
 	int		j;
-	float	z_scale;
-	float	angle;
+	float	x;
+	float	y;
+	float	z;
 
-	angle = 30.0 * (3.147 / 180);
-	z_scale = 2.0;
-
-	for (i = 0; i < fdf->row; i++)
+	i = 0;
+	while (i < fdf->row)
 	{
-		for (j = 0; j < fdf->col; j++)
+		j = 0;
+		while (j < fdf->col)
 		{
-			float x = fdf->points[i][j].x * fdf->scale;
-			float y = fdf->points[i][j].y * fdf->scale;
-			float z = fdf->points[i][j].z * z_scale;
-
-			fdf->points[i][j].screen_x = (x - y) * cos(angle) + fdf->offset_x;
-			fdf->points[i][j].screen_y = (x + y) * sin(angle) - z + fdf->offset_y;
+			x = fdf->points[i][j].x * fdf->scale;
+			y = fdf->points[i][j].y * fdf->scale;
+			z = fdf->points[i][j].z * 2.0;
+			fdf->points[i][j].screen_x = (x - y) * cos( 30.0 * (3.147 / 180)) + fdf->offset_x;
+			fdf->points[i][j].screen_y = (x + y) * sin( 30.0 * (3.147 / 180)) - z + fdf->offset_y;
+			j++;
 		}
+		i++;
 	}
 }
