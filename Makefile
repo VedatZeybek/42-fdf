@@ -2,11 +2,11 @@ NAME = 			fdf
 BONUS_NAME =	fdf_bonus
 
 FILES =			main.c color.c isometric.c create_points.c \
-				error.c draw.c
+				error.c draw_line.c draw_map.c
 
 BONUS_FILES =	main_bonus.c key_handler_bonus.c parallel_bonus.c color_bonus.c \
 				isometric_bonus.c create_points_bonus.c \
-				error_bonus.c draw_bonus.c
+				error_bonus.c draw_line_bonus.c draw_map_bonus.c
 
 UTILS = 		get_next_line.c get_next_line_utils.c ft_atoi.c ft_split.c
 
@@ -21,22 +21,32 @@ BONUS_SRC =		$(addprefix $(BONUS_FILES_PATH), $(BONUS_FILES)) $(addprefix $(UTIL
 OBJ =			$(SRC:.c=.o)
 BONUS_OBJ =		$(BONUS_SRC:.c=.o)
 
+COMPILE_MSG = 
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(OBJ) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+%.o: %.c
+	$(if $(COMPILE_MSG),,$(eval COMPILE_MSG := shown)@echo "Compiling fdf files...")
+	@$(CC) $(CFLAGS) -c $< -o $@
 
+$(NAME): $(OBJ)
+	@echo "Linking $(NAME)..."
+	@$(CC) $(OBJ) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 
 bonus: $(BONUS_NAME)
-	
+
 $(BONUS_NAME): $(BONUS_OBJ)
-	$(CC) $(BONUS_OBJ) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(BONUS_NAME)
+	@echo "Linking $(BONUS_NAME)..."
+	@$(CC) $(BONUS_OBJ) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(BONUS_NAME)
 
 clean:
-	rm -f $(OBJ) $(BONUS_OBJ)
+	@echo "Cleaning object files..."
+	@rm -f $(OBJ) $(BONUS_OBJ)
 
 fclean: clean
-	rm -f $(NAME) $(BONUS_NAME)
+	@echo "Removing executables..."
+	@rm -f $(NAME) $(BONUS_NAME)
 
 re: fclean all
+
+.PHONY: all bonus clean fclean re

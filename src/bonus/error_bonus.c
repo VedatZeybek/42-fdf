@@ -5,7 +5,7 @@ void	free_split(char **split)
 	int	i;
 
 	if (!split)
-		return;
+		return ;
 	i = 0;
 	while (split[i])
 	{
@@ -20,7 +20,7 @@ void	free_points(t_point **points)
 	int	i;
 
 	if (!points)
-		return;
+		return ;
 	i = 0;
 	while (points[i])
 	{
@@ -30,7 +30,7 @@ void	free_points(t_point **points)
 	free(points);
 }
 
-int handle_expose(t_fdf *fdf)
+int	handle_expose(t_fdf *fdf)
 {
 	mlx_clear_window(fdf->mlx, fdf->win);
 	apply_isometric_projection(fdf);

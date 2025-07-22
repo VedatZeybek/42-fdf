@@ -1,8 +1,8 @@
 #include "../../inc/fdf.h"
 
 static void	fill_stats(t_fdf *fdf, char *argv)
-{	
-	int	window_width; 
+{
+	int	window_width;
 	int	window_height;
 
 	fdf->mlx = mlx_init();
@@ -28,18 +28,15 @@ static void	fill_stats(t_fdf *fdf, char *argv)
 	fdf->scale = 20;
 }
 
-
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_fdf fdf;
+	t_fdf	fdf;
 
 	fill_stats(&fdf, argv[1]);
 	apply_isometric_projection(&fdf);
 	draw_map(&fdf);
-	//mlx_key_hook(fdf.win, handle_key, &fdf);
 	mlx_hook(fdf.win, 17, 0, handle_close, &fdf);
 	mlx_expose_hook(fdf.win, handle_expose, &fdf);
 	mlx_loop(fdf.mlx);
 	free_points(fdf.points);
 }
-

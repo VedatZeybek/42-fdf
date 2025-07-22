@@ -1,16 +1,16 @@
 #ifndef FDF_H
 # define FDF_H
 
-#define PIXEL_SIZE 20
-#define MARGIN 50
+# define PIXEL_SIZE 20
+# define MARGIN 50
 
-#include "fcntl.h"
-#include "stdlib.h"
-#include "stdio.h"
-#include "../lib/helper/get_next_line.h"
-#include "../lib/minilibx-linux/mlx.h"
-#include "unistd.h"
-#include "math.h"
+# include "fcntl.h"
+# include "stdlib.h"
+# include "stdio.h"
+# include "../lib/helper/get_next_line.h"
+# include "../lib/minilibx-linux/mlx.h"
+# include "unistd.h"
+# include "math.h"
 
 typedef struct s_point
 {
@@ -22,7 +22,7 @@ typedef struct s_point
 	int	color;
 }	t_point;
 
-typedef struct s_vars
+typedef struct s_fdf
 {
 	void	*mlx;
 	void	*win;
@@ -36,6 +36,13 @@ typedef struct s_vars
 	int		rotation_angle;
 }	t_fdf;
 
+typedef struct s_rgb
+{
+	int	r;
+	int	g;
+	int	b;
+}	t_rgb;
+
 int		ft_atoi(const char *str);
 char	**ft_split(const char *s, char c);
 
@@ -45,9 +52,11 @@ char	**read_map(char *filename, int rows);
 t_point	**create_points(char **map, int col, int row);
 
 void	apply_isometric_projection(t_fdf *fdf);
-void	apply_parallel_projection(t_point **points, int row, int col, int screen_width, int screen_height);
-int 	get_gradient_color(int color_start, int color_end, float t);
+void	apply_parallel_projection(t_fdf *fdf, int screen_width,
+			int screen_height);
+int		get_gradient_color(int color_start, int color_end, float t);
 int		get_color(int z);
+void	draw_line(t_point p0, t_point p1, void *mlx, void *mlx_window);
 void	draw_map(t_fdf *fdf);
 void	free_split(char **split);
 void	free_points(t_point **points);
