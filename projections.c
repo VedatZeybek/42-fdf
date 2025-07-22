@@ -33,13 +33,13 @@ void	apply_parallel_projection(t_point **points, int row, int col, int screen_wi
 
 void apply_isometric_projection(t_fdf *fdf)
 {
-	int		i, j;
-	float	z_scale = 2.0;
+	int		i;
+	int		j;
+	float	z_scale;
+	float	angle;
 
-	float	angle = 30.0 * (3.147 / 180);  // Dereceyi radyana çevir: 30° = π/6
-
-	float	cos_angle = cos(angle);  // ≈ 0.866
-	float	sin_angle = sin(angle);  // ≈ 0.5
+	angle = 30.0 * (3.147 / 180);
+	z_scale = 2.0;
 
 	for (i = 0; i < fdf->row; i++)
 	{
@@ -49,8 +49,8 @@ void apply_isometric_projection(t_fdf *fdf)
 			float y = fdf->points[i][j].y * fdf->scale;
 			float z = fdf->points[i][j].z * z_scale;
 
-			fdf->points[i][j].screen_x = (x - y) * cos_angle + fdf->offset_x;
-			fdf->points[i][j].screen_y = (x + y) * sin_angle - z + fdf->offset_y;
+			fdf->points[i][j].screen_x = (x - y) * cos(angle) + fdf->offset_x;
+			fdf->points[i][j].screen_y = (x + y) * sin(angle) - z + fdf->offset_y;
 		}
 	}
 }

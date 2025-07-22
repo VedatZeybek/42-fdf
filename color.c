@@ -3,20 +3,28 @@
 int get_color(int z)
 {
 	if (z <= 0)
-		return 0x1E90FF; // deniz mavisi
+		return 0x1E90FF;
 	else if (z > 0 && z <= 5)
-		return 0x00FF00; // yeşil
+		return 0x00FF00;
 	else if (z > 5 && z <= 15)
-		return 0xFFFF00; // sarı
+		return 0xFFFF00;
 	else if (z > 15 && z <= 30)
-		return 0xFFA500; // turuncu
+		return 0xFFA500;
 	else
-		return 0xFF0000; // kırmızı
+		return 0xFF0000;
 }
 
-int get_red(int color)    { return (color >> 16) & 0xFF; }
-int get_green(int color)  { return (color >> 8) & 0xFF; }
-int get_blue(int color)   { return color & 0xFF; }
+int get_color_component(int color, int index)
+{
+	if (index == 0) // RED
+		return (color >> 16) & 0xFF;
+	else if (index == 1) // GREEN
+		return (color >> 8) & 0xFF;
+	else if (index == 2) // BLUE
+		return color & 0xFF;
+	return (0);
+}
+
 
 int interpolate(int start, int end, float t)
 {
@@ -25,8 +33,10 @@ int interpolate(int start, int end, float t)
 
 int get_gradient_color(int color_start, int color_end, float t)
 {
-	int r = interpolate(get_red(color_start), get_red(color_end), t);
-	int g = interpolate(get_green(color_start), get_green(color_end), t);
-	int b = interpolate(get_blue(color_start), get_blue(color_end), t);
+	int r = interpolate(get_color_component(color_start, 0), get_color_component(color_end, 0), t);
+	int g = interpolate(get_color_component(color_start, 1), get_color_component(color_end, 1), t);
+	int b = interpolate(get_color_component(color_start, 2), get_color_component(color_end, 2), t);
+
 	return (r << 16) | (g << 8) | b;
 }
+

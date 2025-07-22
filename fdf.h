@@ -50,6 +50,7 @@ int 	get_gradient_color(int color_start, int color_end, float t);
 int		get_color(int z);
 void	draw_map(t_fdf *fdf);
 void	free_split(char **split);
+void	free_points(t_point **points);
 int		handle_close(t_fdf *vars);
 int		handle_key(int keycode, t_fdf *vars);
 int		handle_expose(t_fdf *vars);
