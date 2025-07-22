@@ -1,4 +1,4 @@
-#include "fdf.h"
+#include ".././inc/fdf.h"
 
 static void	fill_stats(t_fdf *fdf, char *argv)
 {	

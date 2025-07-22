@@ -1,4 +1,4 @@
-#include "fdf.h"
+#include ".././inc/fdf.h"
 
 static void	rotate_point_screen(t_point *p, float cos_a, float sin_a, int pivot_x, int pivot_y)
 {
@@ -49,31 +49,22 @@ int handle_key(int keycode, t_fdf *fdf)
 		fdf->scale += 1;
 	else if ((keycode == 's' || keycode == 115) && (fdf->scale > 7))
 		fdf->scale -= 1;
-	else if (keycode == 65363) // Sol
+	else if (keycode == 65363)
 		fdf->offset_x -= 20;
-	else if (keycode == 65361) // Sağ
+	else if (keycode == 65361)
 		fdf->offset_x += 20;
-	else if (keycode == 65364) // Yukarı
+	else if (keycode == 65364)
 		fdf->offset_y -= 20;
-	else if (keycode == 65362) // Aşağı
+	else if (keycode == 65362)
 		fdf->offset_y += 20;
-	else if (keycode == 'a' || keycode == 97) // A tuşu - saat yönü
+	else if (keycode == 'a' || keycode == 97)
 		fdf->rotation_angle -= 5;
-	else if (keycode == 'd' || keycode == 100) // D tuşu - saatin tersi
+	else if (keycode == 'd' || keycode == 100)
 		fdf->rotation_angle += 5;
 		
 	mlx_clear_window(fdf->mlx, fdf->win);
 	apply_isometric_projection(fdf);
 	rotate_screen_coordinates(fdf);
 	draw_map(fdf);
-	return (0);
-}
-
-int handle_expose(t_fdf *fdf)
-{
-	mlx_clear_window(fdf->mlx, fdf->win);
-    apply_isometric_projection(fdf);
-	rotate_screen_coordinates(fdf);
-    draw_map(fdf);
 	return (0);
 }

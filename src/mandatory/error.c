@@ -1,4 +1,4 @@
-#include "fdf.h"
+#include ".././inc/fdf.h"
 
 void	free_split(char **split)
 {
@@ -30,6 +30,14 @@ void	free_points(t_point **points)
 	free(points);
 }
 
+int handle_expose(t_fdf *fdf)
+{
+	mlx_clear_window(fdf->mlx, fdf->win);
+	apply_isometric_projection(fdf);
+	rotate_screen_coordinates(fdf);
+	draw_map(fdf);
+	return (0);
+}
 
 int	handle_close(t_fdf *vars)
 {

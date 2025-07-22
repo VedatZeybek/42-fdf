@@ -1,11 +1,15 @@
 NAME = fdf
 
-SRC =		main.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c \
-			ft_atoi.c ft_split.c color.c projections.c create_points.c \
+FILES =		main.c ft_atoi.c ft_split.c color.c projections.c create_points.c \
 			error.c draw.c key_handler.c
+
+UTILS =  ./lib/gnl/get_next_line.c ./lib/gnl/get_next_line_utils.c 
+
+SRC_PATH = ./src/mandatory/
 
 OBJ = $(SRC:.c=.o)
 MLX = ./minilibx-linux
+
 
 all: $(NAME)
 
