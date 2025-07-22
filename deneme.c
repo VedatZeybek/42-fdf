@@ -97,13 +97,13 @@ t_point	**create_points(char **map, int col, int row)
 	return (points);
 }
 
-void apply_projection(t_point **points, int row, int col)
+void apply_projection(t_point **points, int row, int col, int offset_x, int offset_y)
 {
-    int i, j;
-    int scale = 20;
-    int offset_x = 400;
-    int offset_y = 300;
-    
+	int	i;
+	int	j;
+	int	scale = 20;
+
+
     i = 0;
     while (i < row)
     {
@@ -127,19 +127,30 @@ void draw_line(t_point point0, t_point point1, void *mlx, void *mlx_window)
 {
 	int dx = abs(point1.screen_x - point0.screen_x);
 	int dy = abs(point1.screen_y - point0.screen_y);
-	int steps = (dx > dy) ? dx : dy;
+	int x = point0.screen_x;
+	int y = point0.screen_y;
+	int x_step = (point0.screen_x < point1.screen_x) ? 1 : -1;
+	int y_step = (point0.screen_y < point1.screen_y) ? 1 : -1;
+	int error;
+	int error2;
 
-	float x_inc = (float)(point1.screen_x - point0.screen_x) / steps;
-	float y_inc = (float)(point1.screen_y - point0.screen_y) / steps;
-
-	float x = point0.screen_x;
-	float y = point0.screen_y;
-
-	for (int i = 0; i <= steps; i++)
+	error = dx - dy;
+	while (1)
 	{
-		mlx_pixel_put(mlx, mlx_window, (int)x, (int)y, 0x0000FF);
-		x += x_inc;
-		y += y_inc;
+		mlx_pixel_put(mlx, mlx_window, x, y, 0x0000FF);
+		if (x == point1.screen_x && y == point1.screen_y)
+			break;
+		error2 = 2 * error;
+		if (error2 > -dy)
+		{
+			error -= dy;
+			x += x_step;
+		}
+		if (error2 < dx)
+		{
+			error += dx;
+			y += y_step;
+		}
 	}
 }
 
@@ -168,6 +179,38 @@ int	calculate_column(char **map)
 	free_split(first_row_split);
 	return (col);
 }
+
+void	parallel_projection(t_point *point, int screen_width, int screen_height)
+{
+	double	x_proj, y_proj;
+	double	scale;
+	
+	x_proj = (double)point->x;
+	y_proj = (double)point->y - (double)point->z * 1;
+	
+	scale = fmin(screen_width, screen_height) / 25.0;
+	
+	point->screen_x = (int)(screen_width / 2 + (x_proj - 10) * scale);
+	point->screen_y = (int)(screen_height / 2 + (y_proj - 5) * scale);
+}
+
+void	apply_parallel_projection(t_point **points, int row, int col, int screen_width, int screen_height)
+{
+	int	i, j;
+	
+	i = 0;
+	while (i < row)
+	{
+		j = 0;
+		while (j < col)
+		{
+			parallel_projection(&points[i][j], screen_width, screen_height);
+			j++;
+		}
+		i++;
+	}
+}
+
 int main(int argc, char **argv)
 {
 	void	*mlx;
@@ -178,74 +221,31 @@ int main(int argc, char **argv)
 	t_point	**points;
 	
 	mlx = mlx_init();
-	mlx_window = mlx_new_window(mlx, 800, 600, "Hello world!");
 	row = count_rows(argv[1]);
 	map = read_map(argv[1], row);
 	col = calculate_column(map);
 	
 	points = create_points(map, col, row);
 	
-	apply_projection(points, row, col);
+	int window_width = col * PIXEL_SIZE + MARGIN * 2;
+    int window_height = row * PIXEL_SIZE + MARGIN * 2;
+    
+    window_width = (col * 20 > 1920) ? 1920 : col * 20;
+    window_height = (row * 20 > 1200) ? 1200 : row * 20;
+    
+	window_width = (col * 20 < 800) ? 800 : col * 20;
+    window_height = (row * 20 < 600) ? 600 : row * 20;
+    
+	mlx_window = mlx_new_window(mlx, window_width, window_height, "FDF");
+
+	int offset_x = window_width / 2;
+    int offset_y = window_height / 3;
 	
-	printf("selam\n");
+	//apply_projection(points, row, col, offset_x, offset_y);
+	
+	//apply_parallel_projection(points, row, col, window_width, window_height);
+
 	draw_map(mlx, mlx_window, points, row, col);
 	mlx_loop(mlx);
 }
 
-// void	apply_projection(t_point **points, int row, int col)
-// {
-// 	int		i;
-// 	int		j;
-// 	float	angle;
-// 	int		x;
-// 	int		y;
-// 	int		z;
-
-// 	angle = 0.523599;
-// 	i = 0;
-// 	while (i < row)
-// 	{
-// 		j = 0;
-// 		while (j < col)
-// 		{
-// 			x = points[i][j].x;	
-// 			y = points[i][j].y;	
-// 			z = points[i][j].z;
-
-// 			points[i][j].screen_x = x;
-// 			points[i][j].screen_y = y + 0.10 * z;
-
-// 			j++;
-// 		}
-// 		i++;
-// 	}	
-// }
-
-// void	draw_line(t_point point0, t_point point1, void	*mlx, void	*mlx_window)
-// {
-	// 	int	i;
-	// 	int	x0;
-	// 	int	y0;
-	// 	int x_diff;
-	// 	int y_diff;
-	// 	int	diversion_max;
-	
-	// 	i = 0;
-	// 	x0 = point0.screen_x;
-	// 	y0 = point0.screen_y;
-	
-	// 	x_diff = x0 - point1.screen_x;
-	// 	y_diff = y0 - point1.screen_y;
-	
-	// 	diversion_max = fmax(fabs(x_diff), fabs(y_diff));
-	
-	// 	x_diff = x_diff / diversion_max;
-	// 	y_diff = y_diff / diversion_max;
-	
-	// 	while (point0.screen_x - x0 || point0.screen_y - y0)
-	// 	{
-		// 		mlx_pixel_put(mlx, mlx_window, x0, y0,  0x0000FF);
-		// 		x0 = x0 + x_diff;
-		// 		y0 = y0 + y_diff;
-		// 	}	
-		// }
