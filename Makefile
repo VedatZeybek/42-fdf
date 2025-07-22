@@ -1,6 +1,9 @@
 NAME = fdf
 
-SRC = main.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c ft_atoi.c ft_split.c color.c projections.c
+SRC =		main.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c \
+			ft_atoi.c ft_split.c color.c projections.c create_points.c \
+			error.c draw.c
+
 OBJ = $(SRC:.c=.o)
 MLX = ./minilibx-linux
 

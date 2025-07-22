@@ -1,5 +1,17 @@
 #include "fdf.h"
 
+int	count_column(char **map)
+{
+	int col;
+	
+	char **first_row_split = ft_split(map[0], ' ');
+	col = 0;
+	while (first_row_split[col])
+	col++;
+	free_split(first_row_split);
+	return (col);
+}
+
 int	count_rows(char *filename)
 {
 	int		fd;
