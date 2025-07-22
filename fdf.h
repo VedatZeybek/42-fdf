@@ -33,6 +33,7 @@ typedef struct s_vars
 	int		offset_x;
 	int		offset_y;
 	int		scale;
+	int		rotation_angle;
 }	t_vars;
 
 int		ft_atoi(const char *str);
@@ -50,5 +51,8 @@ int		get_color(int z);
 void	draw_map(void *mlx, void *win, t_point **points, int rows, int cols);
 void	free_split(char **split);
 int		handle_close(t_vars *vars);
+int		handle_key(int keycode, t_vars *vars);
+
+int handle_expose(t_vars *vars);
 
 #endif

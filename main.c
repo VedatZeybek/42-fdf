@@ -1,29 +1,5 @@
 #include "fdf.h"
 
-int handle_key(int keycode, t_vars *vars)
-{
-    if (keycode == 65307)
-        exit(0);
-    else if (keycode == 'w' || keycode == 119)
-        vars->scale += 2;
-    else if ((keycode == 's' || keycode == 115) && vars->scale > 2)
-        vars->scale -= 2;
-    else if (keycode == 65363) // Sol
-        vars->offset_x -= 20;
-    else if (keycode == 65361) // Sağ
-        vars->offset_x += 20;
-    else if (keycode == 65364) // Yukarı
-        vars->offset_y -= 20;
-    else if (keycode == 65362) // Aşağı
-        vars->offset_y += 20;
-
-    mlx_clear_window(vars->mlx, vars->win);
-    apply_isometric_projection(vars->points, vars->row, vars->col, vars->offset_x, vars->offset_y, vars->scale);
-    draw_map(vars->mlx, vars->win, vars->points, vars->row, vars->col);
-    return (0);
-}
-
-
 int main(int argc, char **argv)
 {
 
@@ -67,6 +43,8 @@ int main(int argc, char **argv)
 
 	mlx_key_hook(fdf.win, handle_key, &fdf);
 	mlx_hook(fdf.win, 17, 0, handle_close, &fdf);
+
+	mlx_expose_hook(fdf.win, handle_expose, &fdf);
 
 
 	mlx_loop(fdf.mlx);
