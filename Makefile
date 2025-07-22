@@ -1,6 +1,6 @@
 NAME = fdf
 
-SRC = deneme.c
+SRC = deneme.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c ft_atoi.c ft_split.c
 OBJ = $(SRC:.c=.o)
 MLX = ./minilibx-linux
 

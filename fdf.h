@@ -8,9 +8,9 @@ typedef struct s_point
 	int	z;
 	int	screen_x;
 	int	screen_y;
-} t_point;
+}	t_point;
 
-int	ft_atoi(const char *str);
+int		ft_atoi(const char *str);
 char	**ft_split(const char *s, char c);
 
 
