@@ -1,4 +1,4 @@
-#include ".././inc/fdf.h"
+#include "../../inc/fdf.h"
 
 static void	rotate_point_screen(t_point *p, float cos_a, float sin_a, int pivot_x, int pivot_y)
 {

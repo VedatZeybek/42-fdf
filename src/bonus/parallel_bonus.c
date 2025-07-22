@@ -1,4 +1,4 @@
-#include ".././inc/fdf.h"
+#include "../../inc/fdf.h"
 
 static void	parallel_projection(t_point *point, int screen_width, int screen_height)
 {
