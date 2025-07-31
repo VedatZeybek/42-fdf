@@ -33,12 +33,17 @@ void	free_points(t_point **points)
 int	handle_expose(t_fdf *fdf)
 {
 	mlx_clear_window(fdf->mlx, fdf->win);
-	apply_isometric_projection(fdf);
 	draw_map(fdf);
 	return (0);
 }
 
-int	handle_close(t_fdf *vars)
+void	free_mlx(t_fdf *fdf)
+{
+	free(fdf->mlx);
+	free(fdf->win);
+}
+
+int	handle_close(void)
 {
 	exit(0);
 	return (0);

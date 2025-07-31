@@ -1,5 +1,27 @@
 #include "../../inc/fdf_bonus.h"
 
+int	calculate_scale(int win_width, t_fdf *fdf)
+{
+	int	scale;
+	int	scale_coefficient;
+
+	scale_coefficient = 10;
+	if (win_width > 600)
+		scale_coefficient = 15;
+	if (win_width > 1000)
+		scale_coefficient = 20;
+	if (win_width > 2000)
+		scale_coefficient = 40;
+	if (win_width > 10000)
+		scale_coefficient = 60;
+	scale = win_width * scale_coefficient / (fdf->col * fdf->row);
+	if (scale < 2)
+		scale = 2;
+	else if (scale > 50)
+		scale = 50;
+	return (scale);
+}
+
 static void	fill_stats(t_fdf *fdf, char *argv)
 {
 	int	window_width;
@@ -11,6 +33,7 @@ static void	fill_stats(t_fdf *fdf, char *argv)
 	fdf->col = count_column(fdf->map);
 	window_width = fdf->col * PIXEL_SIZE + MARGIN * 2;
 	window_height = fdf->row * PIXEL_SIZE + MARGIN * 2;
+	fdf->scale = calculate_scale(window_width, fdf);
 	if ((fdf->col * 20 > 1920) && (fdf->row * 20 > 1200))
 	{
 		window_width = 1920;
@@ -25,7 +48,6 @@ static void	fill_stats(t_fdf *fdf, char *argv)
 	fdf->win = mlx_new_window(fdf->mlx, window_width, window_height, "FDF");
 	fdf->offset_x = window_width / 2;
 	fdf->offset_y = window_height / 3;
-	fdf->scale = 20;
 	fdf->projection_type = '1';
 }
 
@@ -42,4 +64,5 @@ int	main(int argc, char **argv)
 	mlx_hook(fdf.win, 17, 0, handle_close, &fdf);
 	mlx_expose_hook(fdf.win, handle_expose, &fdf);
 	mlx_loop(fdf.mlx);
+	free_mlx(&fdf);
 }

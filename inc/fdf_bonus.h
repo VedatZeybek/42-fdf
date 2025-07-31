@@ -6,7 +6,6 @@
 
 # include "fcntl.h"
 # include "stdlib.h"
-# include "stdio.h"
 # include "../lib/helper/get_next_line.h"
 # include "../lib/minilibx-linux/mlx.h"
 # include "unistd.h"
@@ -76,8 +75,9 @@ void	draw_line(t_point p0, t_point p1, void *mlx, void *mlx_window);
 void	draw_map(t_fdf *fdf);
 void	free_split(char **split);
 void	free_points(t_point **points);
-int		handle_close(t_fdf *vars);
+int		handle_close(void);
 int		handle_key(int keycode, t_fdf *vars);
 int		handle_expose(t_fdf *vars);
+void	free_mlx(t_fdf *fdf);
 
 #endif

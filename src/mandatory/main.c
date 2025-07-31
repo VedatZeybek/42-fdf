@@ -1,5 +1,27 @@
 #include "../../inc/fdf.h"
 
+int	calculate_scale(int win_width, t_fdf *fdf)
+{
+	int	scale;
+	int	scale_coefficient;
+
+	scale_coefficient = 10;
+	if (win_width > 600)
+		scale_coefficient = 15;
+	if (win_width > 1000)
+		scale_coefficient = 20;
+	if (win_width > 2000)
+		scale_coefficient = 40;
+	if (win_width > 10000)
+		scale_coefficient = 60;
+	scale = win_width * scale_coefficient / (fdf->col * fdf->row);
+	if (scale < 2)
+		scale = 2;
+	else if (scale > 50)
+		scale = 50;
+	return (scale);
+}
+
 static void	fill_stats(t_fdf *fdf, char *argv)
 {
 	int	window_width;
@@ -11,12 +33,13 @@ static void	fill_stats(t_fdf *fdf, char *argv)
 	fdf->col = count_column(fdf->map);
 	window_width = fdf->col * PIXEL_SIZE + MARGIN * 2;
 	window_height = fdf->row * PIXEL_SIZE + MARGIN * 2;
-	if ((fdf->col * 20 > 1920) && (fdf->row * 20 > 1200))
+	fdf->scale = calculate_scale(window_width, fdf);
+	if ((fdf->col * 20 > 1920) || (fdf->row * 20 > 1200))
 	{
 		window_width = 1920;
 		window_height = 1200;
 	}
-	else if ((fdf->col * 20 < 800) && (fdf->row * 20 < 600))
+	else if ((fdf->col * 20 < 800) || (fdf->row * 20 < 600))
 	{
 		window_width = 800;
 		window_height = 600;
@@ -25,10 +48,9 @@ static void	fill_stats(t_fdf *fdf, char *argv)
 	fdf->win = mlx_new_window(fdf->mlx, window_width, window_height, "FDF");
 	fdf->offset_x = window_width / 2;
 	fdf->offset_y = window_height / 3;
-	fdf->scale = 20;
 }
 
-int	handle_key(int keycode, t_fdf *fdf)
+int	handle_key(int keycode)
 {
 	if (keycode == 65307)
 		exit(0);
@@ -49,4 +71,5 @@ int	main(int argc, char **argv)
 	mlx_expose_hook(fdf.win, handle_expose, &fdf);
 	mlx_loop(fdf.mlx);
 	free_points(fdf.points);
+	free_mlx(&fdf);
 }

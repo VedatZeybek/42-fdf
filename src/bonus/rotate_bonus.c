@@ -20,12 +20,8 @@ void	rotate_screen_coordinates(t_fdf *fdf)
 	int		i;
 	int		j;
 	float	rad;
-	float	cos_a;
-	float	sin_a;
 
 	rad = fdf->rotation_angle * 3.14 / 180.0f;
-	cos_a = cos(rad);
-	sin_a = sin(rad);
 	i = 0;
 	while (i < fdf->row)
 	{

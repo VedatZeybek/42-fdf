@@ -29,7 +29,7 @@ static void	handle_movement_keys(int keycode, t_fdf *fdf)
 {
 	if (keycode == 'w' || keycode == 119)
 		fdf->scale += 1;
-	else if ((keycode == 's' || keycode == 115) && fdf->scale > 2)
+	else if ((keycode == 's' || keycode == 115) && fdf->scale > 1)
 		fdf->scale -= 1;
 	else if (keycode == 65363)
 		fdf->offset_x -= 20;

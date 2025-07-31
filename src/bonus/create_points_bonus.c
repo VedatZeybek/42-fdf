@@ -22,7 +22,6 @@ int	count_rows(char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
-		perror("File Error");
 		exit(EXIT_FAILURE);
 	}
 	count = 0;
