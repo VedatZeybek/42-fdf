@@ -12,7 +12,7 @@
 
 #include "../../inc/fdf_bonus.h"
 
-void	draw_map(t_fdf *fdf)
+void	draw_map(t_fdf *fdf, t_img *img)
 {
 	int	y;
 	int	x;
@@ -24,14 +24,11 @@ void	draw_map(t_fdf *fdf)
 		while (x < fdf->col)
 		{
 			if (x < fdf->col - 1)
-				draw_line(fdf->points[y][x], fdf->points[y][x + 1],
-					fdf->mlx, fdf->win);
+				draw_line(fdf->points[y][x], fdf->points[y][x + 1], img);
 			if (y < fdf->row - 1)
-				draw_line(fdf->points[y][x], fdf->points[y + 1][x],
-					fdf->mlx, fdf->win);
+				draw_line(fdf->points[y][x], fdf->points[y + 1][x], img);
 			x++;
 		}
 		y++;
 	}
-	display_projection_menu(fdf);
 }

@@ -62,23 +62,28 @@ static void	draw_gradient_pixel(t_line *line, t_point p0, t_point p1, int step)
 	line->color = get_gradient_color(p0.color, p1.color, t);
 }
 
-static int	put_pixel_and_check(t_line *line, t_point p1, void *mlx, void *win)
+static void put_pixel_to_image(t_img *img, int x, int y, int color)
 {
-	mlx_pixel_put(mlx, win, line->x, line->y, line->color);
-	return (line->x == p1.screen_x && line->y == p1.screen_y);
+	char *dst;
+
+	if (x < 0 || x >= img->width || y < 0 || y >= img->height)
+		return ;
+	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
 }
 
-void	draw_line(t_point p0, t_point p1, void *mlx, void *mlx_window)
+void draw_line(t_point p0, t_point p1, t_img *img)
 {
-	t_line	line;
-	int		i;
+	t_line line;
+	int i;
 
 	init_line_data(p0, p1, &line);
 	i = 0;
 	while (i <= line.steps)
 	{
 		draw_gradient_pixel(&line, p0, p1, i);
-		if (put_pixel_and_check(&line, p1, mlx, mlx_window))
+		put_pixel_to_image(img, line.x, line.y, line.color);
+		if (line.x == p1.screen_x && line.y == p1.screen_y)
 			break ;
 		calculate_next_pixel(&line);
 		i++;

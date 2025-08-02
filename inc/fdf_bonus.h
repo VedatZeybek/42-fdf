@@ -33,19 +33,32 @@ typedef struct s_point
 	int	color;
 }	t_point;
 
+typedef struct s_img {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+} t_img;
+
 typedef struct s_fdf
 {
-	void	*mlx;
-	void	*win;
-	int		row;
-	int		col;
-	char	**map;
-	t_point	**points;
-	int		offset_x;
-	int		offset_y;
-	int		scale;
-	int		rotation_angle;
-	char	projection_type;
+	void			*mlx;
+	void			*win;
+	int				row;
+	int				col;
+	char			**map;
+	t_point			**points;
+	t_img			*img;
+	int				offset_x;
+	int				offset_y;
+	int				scale;
+	int				rotation_angle;
+	char			projection_type;
+	int				window_width;
+	int				window_height;
 }	t_fdf;
 
 typedef struct s_rgb
@@ -83,8 +96,8 @@ void	rotate_screen_coordinates(t_fdf *fdf);
 
 int		get_gradient_color(int color_start, int color_end, float t);
 int		get_color(int z);
-void	draw_line(t_point p0, t_point p1, void *mlx, void *mlx_window);
-void	draw_map(t_fdf *fdf);
+void 	draw_line(t_point p0, t_point p1, t_img *img);
+void	draw_map(t_fdf *fdf, t_img *img);
 void	free_split(char **split);
 void	free_points(t_point **points, int rows);
 void	free_mlx_simple(t_fdf *fdf);

@@ -53,6 +53,11 @@ static void	handle_movement_keys(int keycode, t_fdf *fdf)
 		fdf->offset_y += 20;
 }
 
+static void	clear_image(t_img *img)
+{
+	ft_memset(img->addr, 0, img->width * img->height * (img->bits_per_pixel / 8));
+}
+
 int	handle_key(int keycode, t_fdf *fdf)
 {
 	if (keycode == 65307)
@@ -65,9 +70,12 @@ int	handle_key(int keycode, t_fdf *fdf)
 	}
 	handle_movement_keys(keycode, fdf);
 	handle_projection_keys(keycode, fdf);
-	mlx_clear_window(fdf->mlx, fdf->win);
 	apply_projection(fdf, fdf->projection_type);
 	rotate_screen_coordinates(fdf);
-	draw_map(fdf);
+	clear_image(fdf->img);
+	mlx_clear_window(fdf->mlx, fdf->win);
+	draw_map(fdf, fdf->img);
+	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img->img, 0, 0);
+	display_projection_menu(fdf);
 	return (0);
 }

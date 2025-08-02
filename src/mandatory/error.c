@@ -49,6 +49,8 @@ void	free_mlx_simple(t_fdf *fdf)
 		mlx_destroy_window(fdf->mlx, fdf->win);
 	if (fdf->mlx)
 		mlx_destroy_display(fdf->mlx);
+	// if (fdf->img)
+	// 	mlx_destroy_image(fdf->img, NULL);
 }
 
 int	handle_close(t_fdf *fdf)
