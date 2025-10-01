@@ -35,7 +35,8 @@ Here is an example of the output:
 
 ![FdF Screenshot](MonaLisa.png)
 
-![FdF Screenshot](MonaLisaParallel.png)
+![FdF Screenshot](MonaLisaParallel.png
+
 
 *(Replace `screenshot.png` with your actual image)*
 
@@ -45,13 +46,11 @@ Here is an example of the output:
 
 ### 1. Clone repository
 ```bash
-git clone https://github.com/username/fdf.git
-cd fdf
-2. Compile
-bash
-Copy code
-make
-3. Run
-bash
-Copy code
-./fdf maps/42.fdf
+
+git clone https://github.com/VedatZeybek/42-fdf.git
+
+cd 42-fdf
+
+make && make bonus && make clean && make tests
+
+./fdf_bonus test_maps/monalisa.map
