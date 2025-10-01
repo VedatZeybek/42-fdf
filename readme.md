@@ -35,6 +35,8 @@ Here is an example of the output:
 
 ![FdF Screenshot](MonaLisa.png)
 
+![FdF Screenshot](MonaLisaParallel.png)
+
 *(Replace `screenshot.png` with your actual image)*
 
 ---
